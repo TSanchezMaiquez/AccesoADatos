@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c66f55b1-63bb-4148-abda-e00f1ddb9725" name="Changes" comment="Prueba2">
-      <change afterPath="$PROJECT_DIR$/src/datos/Conexion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/datos/EmpleadoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domain/Empleado.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Conexion1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="c66f55b1-63bb-4148-abda-e00f1ddb9725" name="Changes" comment="Prueba2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +18,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -63,7 +57,9 @@
       <option name="presentableId" value="Default" />
       <updated>1697439763598</updated>
       <workItem from="1697439764599" duration="7472000" />
-      <workItem from="1697473469735" duration="896000" />
+      <workItem from="1697473469735" duration="3291000" />
+      <workItem from="1698042912039" duration="5771000" />
+      <workItem from="1698048754572" duration="1309000" />
     </task>
     <task id="LOCAL-00001" summary="Prueba2">
       <option name="closed" value="true" />
