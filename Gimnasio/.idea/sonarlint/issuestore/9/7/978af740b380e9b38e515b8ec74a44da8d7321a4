@@ -1,0 +1,10 @@
+
+‘	java:S1173"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü¢ÃßşÿÿÿÿJ$27d2c09f-0d3b-4625-b0f9-c0aa3bc847f5
+‘	java:S1173"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü¢ÃßşÿÿÿÿJ$1dec1309-5b0b-4806-a7cf-774dea5d0e6e
+]
+java:S1643"Use a StringBuilder instead.(äºäùÿÿÿÿJ$5e9ca258-f978-42f5-926d-1e6b04ddaa0f
+v
+java:S1118
+":Add a private constructor to hide the implicit public one.(°à±ÖJ$4558f716-e49b-42dc-bad1-a8e6dd8edfee
+k
+java:S1197"*Move the array designators [] to the type.(¡ûş¤şÿÿÿÿJ$63e29bb8-d692-4727-8a2f-ce2373f5b6f1

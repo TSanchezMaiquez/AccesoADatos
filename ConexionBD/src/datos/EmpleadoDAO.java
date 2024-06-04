@@ -2,6 +2,8 @@ package datos;
 
 import domain.Empleado;
 
+import static datos.Conexion.close;
+import static datos.Conexion.getConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +11,12 @@ import java.util.List;
 public class EmpleadoDAO {
 
     private static final String SQL_SELECT = "SELECT nDIEmp, nomEmp, sexEmp, fecNac, fecIncorporacion, salEmp, comisionE, cargoE, jefeID, codDepto FROM empleados";
-    private static final String SQL_INSERT = "insert into empleados(nDIEmp, nomEmp, sexEmp, fecNac, fecIncorporacion, salEmp, comisionE, cargoE, jefeID, codDepto) " +
-            "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO empleados(nDIEmp, nomEmp, sexEmp, fecNac, fecIncorporacion, salEmp, comisionE, cargoE, jefeID, codDepto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE empleados SET nomEmp=?, sexEmp=?, fecNac=?, fecIncorporacion=?, salEmp=?, comisionE=?, cargoE=?, jefeID=?, codDepto=? WHERE nDIEmp=?";
+    private static final String SQL_DELETE = "DELETE FROM empleados WHERE nDIEmp=?";
 
-    private static final String SQL_UPDATE ="update empleados set nomEmp=?, sexEmp=?, fecNac=?, fecIncorporacion=?, salEmp=?, comisionE=?, " +
-            "cargoE=?, jefeID=?, codDepto=?";
-
-
-    public List<Empleado> seleccionar() {
-
+    public List<Empleado> seleccionar()
+    {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -25,34 +24,37 @@ public class EmpleadoDAO {
         List<Empleado> empleados = new ArrayList<>();
 
         try {
+
             conn = Conexion.getConnection();
+
             stmt = conn.prepareStatement(SQL_SELECT);
+
             rs = stmt.executeQuery();
 
             while (rs.next()) {
                 String idEmpleado = rs.getString("nDIEmp");
-                String nomEmp = rs.getString("nomEmp");
-                String sexEmp = rs.getString("sexEmp");
+                String nombre = rs.getString("nomEmp");
+                String sexo = rs.getString("sexEmp");
                 Date fecNac = rs.getDate("fecNac");
-                Date fecIncorporacion = rs.getDate("fecIncorporacion");
-                float salEmp = rs.getFloat("salEmp");
-                float comisionE = rs.getFloat("comisionE");
-                String cargoE = rs.getString("cargoE");
-                String jefeId = rs.getString("jefeID");
+                Date fecIncorp = rs.getDate("fecIncorporacion");
+                float salario = rs.getFloat("salEmp");
+                float comision = rs.getFloat("comisionE");
+                String cargo = rs.getString("cargoE");
+                String jefe = rs.getString("jefeID");
                 String departamento = rs.getString("codDepto");
 
-                empleado = new Empleado(idEmpleado, nomEmp, sexEmp.charAt(0), fecNac, fecIncorporacion, salEmp, comisionE, cargoE, jefeId, departamento);
-                empleados.add(empleado);
+                empleado = new Empleado(idEmpleado, nombre, sexo.charAt(0), fecNac, fecIncorp, salario, comision, cargo, jefe, departamento);
 
+                empleados.add(empleado);
             }
 
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         } finally {
             try {
-                Conexion.close(rs);
-                Conexion.close(stmt);
-                Conexion.close(conn);
+                close(rs);
+                close(stmt);
+                close(conn);
             } catch (SQLException e) {
                 e.printStackTrace(System.out);
             }
@@ -61,34 +63,39 @@ public class EmpleadoDAO {
         return empleados;
     }
 
-    public int insertar (Empleado empleado){
-
+    public int insertar(Empleado empleado)
+    {
         Connection conn = null;
         PreparedStatement stmt = null;
-        int registros =0;
+        int registros = 0;
 
-        try{
+        try {
             conn = Conexion.getConnection();
+
             stmt = conn.prepareStatement(SQL_INSERT);
+
             stmt.setString(1, empleado.getIdEmpleado());
             stmt.setString(2, empleado.getNombre());
-            stmt.setString(3, empleado.getSexoString());
-            stmt.setDate(4, empleado.getFechaNac());
-            stmt.setDate(5, empleado.getFechaIncorporacion());
+            stmt.setString(3, empleado.getSexo());
+            stmt.setDate(4, empleado.getFecNac());
+            stmt.setDate(5, empleado.getFecIncorporacion());
             stmt.setFloat(6, empleado.getSalario());
             stmt.setFloat(7, empleado.getComision());
             stmt.setString(8, empleado.getCargo());
             stmt.setString(9, empleado.getJefeId());
-            stmt.setString(10, empleado.getCodDepartamento());
+            stmt.setString(10, empleado.getCodDept());
 
             registros = stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace(System.out);
-        } finally {
+        }
+        finally {
             try {
-                Conexion.close(stmt);
-                Conexion.close(conn);
+
+                close(stmt);
+                close(conn);
+
             } catch (SQLException e) {
                 e.printStackTrace(System.out);
             }
@@ -97,42 +104,75 @@ public class EmpleadoDAO {
         return registros;
     }
 
-    public int actualizar (Empleado empleado){
+    public int actualizar(Empleado empleado)
+    {
         Connection conn = null;
         PreparedStatement stmt = null;
-        int registros =0;
+        int registros = 0;
 
         try {
-            conn = Conexion.getConnection();
+            conn = getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
 
-
             stmt.setString(1, empleado.getNombre());
-            stmt.setString(2, empleado.getSexoString());
-            stmt.setDate(3, empleado.getFechaNac());
-            stmt.setDate(4, empleado.getFechaIncorporacion());
+            stmt.setString(2, empleado.getSexo());
+            stmt.setDate(3, empleado.getFecNac());
+            stmt.setDate(4, empleado.getFecIncorporacion());
             stmt.setFloat(5, empleado.getSalario());
             stmt.setFloat(6, empleado.getComision());
             stmt.setString(7, empleado.getCargo());
             stmt.setString(8, empleado.getJefeId());
-            stmt.setString(9, empleado.getCodDepartamento());
+            stmt.setString(9, empleado.getCodDept());
             stmt.setString(10, empleado.getIdEmpleado());
 
             registros = stmt.executeUpdate();
 
-
         } catch (SQLException e) {
             e.printStackTrace(System.out);
-        } finally {
+        }
+        finally {
             try {
-                Conexion.close(stmt);
-                Conexion.close(conn);
+                close(stmt);
+                close(conn);
             } catch (SQLException e) {
                 e.printStackTrace(System.out);
             }
-
         }
 
-    return registros;
+        return registros;
     }
+
+    public int delete(Empleado empleado)
+    {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+
+        try {
+            conn = Conexion.getConnection();
+            System.out.println("Ejecutanto consulta: " + SQL_DELETE);
+            stmt = conn.prepareStatement(SQL_DELETE);
+
+            stmt.setString(1, empleado.getIdEmpleado());
+
+            rows = stmt.executeUpdate();
+
+            System.out.println("Número de registros eliminados: " + rows);
+
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        finally {
+            try {
+                close(stmt);
+                close(conn);
+
+            } catch (SQLException e) {
+                e.printStackTrace(System.out);
+            }
+        }
+
+        return rows;
+    }
+
 }
